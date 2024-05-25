@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1.html"
+>
+<link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div class="container" layout:fragment="content">
+      <div class="row justify-content-center">
+          <div class="card m-4 col-5">
+              <h2 class="card-header">New Patient</h2>
+              <div class="card-body">
+                  <form method="post" th:action="@{/admin/save}">
+                      <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label">Nom</label>
+                          <input type="text" th:value="${patient.nom}" name="nom" class="form-control" id="exampleInputEmail1">
+                          <div id="nomError" th:errors="${patient.nom}" class="form-text text-danger"></div>
+                      </div>
+                      <div class="mb-3">
+                          <label for="exampleInputEmail2" class="form-label">Date naissance</label>
+                          <input type="date" th:value="${patient.dateNaissance}" name="dateNaissance" class="form-control" id="exampleInputEmail2">
+                          <div id="dateError" th:errors="${patient.dateNaissance}" class="form-text text-danger"></div>
+                      </div>
+                      <div class="mb-3">
+                          <label for="exampleInputEmail3" class="form-label"> Malade </label>&nbsp;
+                          <input type="checkbox" th:checked="${patient.malade}" name="malade" class="form-check-input" id="exampleInputEmail3">
+                          <div id="maladeError" th:errors="${patient.malade}" class="form-text text-danger"></div>
+                      </div>
+                      <div class="mb-3">
+                          <label for="exampleInputEmail4" class="form-label">Score</label>
+                          <input type="text" th:field="${patient.score}" name="score" class="form-control" id="exampleInputEmail4">
+                          <div id="scoreError" th:errors="${patient.score}" class="form-text text-danger"></div>
+                      </div>
+                      <div class="d-grid gap-2">
+                          <button class="btn btn-primary" type="submit">Submit</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+</html>

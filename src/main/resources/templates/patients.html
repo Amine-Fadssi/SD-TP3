@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1.html"
+>
+<link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div layout:fragment="content">
+      <div class="card m-4">
+          <h2 class="card-header">Patient Page</h2>
+          <div class="card-body">
+              <form method="get" th:action="@{/user/index}">
+                  <label>keyword : </label>
+                  <input class="" type="text" th:value="${keyword}" name="keyword">
+                  <button type="submit" class="btn btn-success">search</button>
+              </form>
+              <table class="table">
+                  <thead>
+                  <th>ID</th><th>Nom</th><th>Date</th><th>Malade</th><th>Score</th><th>action</th>
+                  </thead>
+                  <tbody th:each="p:${listPatients}">
+                  <td th:text="${p.id}"></td><td th:text="${p.nom}"></td><td th:text="${p.dateNaissance}"></td>
+                  <td th:text="${p.malade}"></td><td th:text="${p.score}"></td>
+                  <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                      <a onclick="javascript: return confirm('Are you sure?')"
+                         th:href="@{/admin/delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}" class="btn btn-danger">Delete</a>
+                      <a
+                         th:href="@{/admin/editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}" class="btn btn-success ms-2">Edit</a>
+                  </td>
+                  </tbody>
+              </table>
+          </div>
+          <div class="card-footer">
+              <ul class="nav nav-pills p-2">
+                  <li th:each="page,status:${pages}" class="p-1">
+                      <a th:href="@{/user/index(page=${status.index},keyword=${keyword})}"
+                         th:text="${status.index}"
+                         th:class="${currentPage==status.index?'btn btn-primary':'btn btn-outline-primary'}"
+                      ></a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </div>
+</body>
+</html>
